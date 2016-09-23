@@ -1,4 +1,7 @@
-all : TP1
+all : try_mul
 
-TP1 : TP1.c
-	gcc -o TP1 TP1.c -Wall -O -m32
+try_mul : try.o try_mul.c
+	gcc -o try_mul try.o try_mul.c -Wall -O -m32
+
+try.o : try.c
+	gcc -c try.c

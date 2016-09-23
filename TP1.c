@@ -7,7 +7,7 @@ print
 (void)
 {
   int x, y;
-  asm ("movl %%ebp, %0" "\n\t" "movl %%esp, %1"
+  asm ("movl %%ebp, %0" "\n\t" "movl %%esp, %0"
 
                : "=r"(x)  /* x is output operand */
 
