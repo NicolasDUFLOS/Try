@@ -4,7 +4,7 @@
 static struct ctx_s *pctx;
 
 static int
-mul()
+mul(int depth)
 {
     int i;
 
@@ -12,17 +12,16 @@ mul()
         case EOF :
             return 1; /* neutral element */
         case 0 :
-            return mul(); /* erroneous read */
+            return mul(depth+1); /* erroneous read */
         case 1 :
-            if (i){ 
-                printf("Coucou");
-                return i * mul();
+            if (i){
+                return i * mul(depth + 1);
             }
             else{
-                printf("GET BACK!");
-                throw(&pctx, 0);
+                throw(pctx, 0);
             }
     }
+    return -1;
 }
 
 int
@@ -31,7 +30,7 @@ main(int argc, char *argv[])
     int product;
 
     printf("A list of int, please\n"); 
-    product = try(&pctx, mul, 0);
+    product = try(pctx, mul, 0);
     printf("product = %d\n", product); 
     return 0;
 }
