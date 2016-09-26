@@ -12,7 +12,7 @@ int
 try
 (struct ctx_s *pctx, funct_t *f, int arg)
 {
-    asm ("movl %%esp, %0" "\n\t" "movl %%ebp, %0"
+    asm ("movl %%esp, %0" "\n\t" "movl %%ebp, %1"
             : "=r"(pctx->esp)
             , "=r"(pctx->ebp)
         );
@@ -23,10 +23,14 @@ int
 throw
 (struct ctx_s *pctx, int r)
 {
-    asm ("movl %1, %%esp" "\n\t" "movl %1, %%ebp"
+    static struct ctx_s *spctx;
+    static int res;
+
+    res = r;
+    asm ("movl %0, %%esp" "\n\t" "movl %1, %%ebp"
             :
-            : "r" (pctx->esp)
-            , "r" (pctx->ebp)
+            : "r" (spctx->esp)
+            , "r" (spctx->ebp)
     );
-    return r;
+    return res;
 }
