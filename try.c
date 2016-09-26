@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "try.h"
 
-typedef struct ctx_s{
+struct ctx_s{
     void *esp;
     void *ebp;
 };
@@ -22,11 +22,13 @@ throw
 (struct ctx_s *pctx, int r)
 {
     static int res;
+    static struct ctx_s *spctx;
     res = r;
+    spctx = pctx;
     asm ("movl %1, %%esp" "\n\t" "movl %1, %%ebp"
             :
-            : "r"(pctx->esp)
-            , "r"(pctx->ebp)
+            : "r"(spctx->esp)
+            , "r"(spctx->ebp)
     );
     return res;
 }

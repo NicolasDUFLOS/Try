@@ -18,7 +18,7 @@ mul(int depth)
                 return i * mul(depth + 1);
             }
             else{
-                throw(pctx, 0);
+                throw(&pctx, 0);
             }
     }
     return -1;
@@ -30,7 +30,7 @@ main(int argc, char *argv[])
     int product;
 
     printf("A list of int, please\n"); 
-    product = try(pctx, mul, 0);
+    product = try(&pctx, mul, 0);
     printf("product = %d\n", product); 
     return 0;
 }
